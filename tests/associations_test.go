@@ -179,11 +179,11 @@ func TestForeignKeyConstraintsBelongsTo(t *testing.T) {
 
 func TestFullSaveAssociations(t *testing.T) {
 	coupon := &Coupon{
-		ID: "full-save-association-coupon1",
+		ID: 1,
 		AppliesToProduct: []*CouponProduct{
 			{
-				CouponId:  "full-save-association-coupon1",
-				ProductId: "full-save-association-product1",
+				CouponId:  1,
+				ProductId: 0,
 			},
 		},
 		AmountOff:  10,
@@ -198,11 +198,11 @@ func TestFullSaveAssociations(t *testing.T) {
 		t.Errorf("Failed, got error: %v", err)
 	}
 
-	if DB.First(&Coupon{}, "id = ?", "full-save-association-coupon1").Error != nil {
+	if DB.First(&Coupon{}, "id = ?", 1).Error != nil {
 		t.Errorf("Failed to query saved coupon")
 	}
 
-	if DB.First(&CouponProduct{}, "coupon_id = ? AND product_id = ?", "full-save-association-coupon1", "full-save-association-product1").Error != nil {
+	if DB.First(&CouponProduct{}, "coupon_id = ? AND product_id = ?", 1, 0).Error != nil {
 		t.Errorf("Failed to query saved association")
 	}
 
